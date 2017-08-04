@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 const fs = require('fs')
+const rulesRoutes = require('./routes/rules')
 
 const app = express();
 
@@ -34,21 +35,7 @@ app.use(
   })
 );
 
-//assign values=============================
-const words = fs.readFileSync("/usr/share/dict/words", "utf-8").toLowerCase().split("\n");
-const word = words[Math.floor(Math.random() * words.length)];
-console.log(word);
-let tooMany = '';
-let guessedLetters = [];
-let wordDisplay = '';
-let numGuesses = 8;
-let msge = '';
-let alreadyGuessed = '';
-for (var i = 0; i < word.length; i++) {
-  wordDisplay += '_ ';
-}
 
-//get and post and establish game rules========
 app.use((req, res, next) => {
   if (!req.session.word) {
     req.session.word;
@@ -56,67 +43,8 @@ app.use((req, res, next) => {
   next();
 })
 
-app.get('/', function(req, res) {
-  content = {
-    tooMany: tooMany,
-    guessedLetters: guessedLetters,
-    wordDisplay: wordDisplay,
-    numGuesses: numGuesses,
-    alreadyGuessed: alreadyGuessed,
-    msge: msge
-  }
-  res.render('home', content)
-})
 
-app.post('/', function(req, res) {
-  let letter = req.body.letter.toLowerCase();
-  //send an error message if a letter is guessed more than once
-  if (guessedLetters.includes(letter)) {
-    alreadyGuessed = 'You already guessed this letter, try again';
-  } else {
-    alreadyGuessed = '';
-  }
-  //if they guessed letter already, don't take away a turn
-  let index = word.indexOf(letter);
-  if (index === -1) {
-    if (guessedLetters.includes(letter)) {
-      numGuesses++;
-    }
-    numGuesses--;
-  }
-  guessedLetters.push(letter);
-
-
-  if (index > 0) {
-
-  }
-
-  while (index > -1) {
-    wordDisplay = wordDisplay.substr(0, index) + letter + wordDisplay.substr(index + 1);
-    index = word.indexOf(letter, index + 1);
-    // tooManyLetters = '';
-  }
-
-  //if guess is too long, display error
-  if (letter.length > 1) {
-    letter = '';
-    numGuesses++;
-    tooManyLetters = 'Only one letter at a time is allowed'
-  } else {
-    tooManyLetters = '';
-  }
-
-  //if they use all 8 guesses
-  if (numGuesses < 1) {
-    msge = 'You lost!'
-  }
-
-
-  res.redirect('/');
-});
-
-
-
+app.use('/', rulesRoutes)
 
 
 app.listen(3000, function() {
