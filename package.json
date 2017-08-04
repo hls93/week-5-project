@@ -8,7 +8,8 @@
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.4",
-    "express-validator": "^3.2.1"
+    "express-validator": "^3.2.1",
+    "fs": "0.0.1-security"
   },
   "devDependencies": {},
   "scripts": {

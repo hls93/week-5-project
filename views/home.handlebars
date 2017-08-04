@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Game</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+
+  <header>
+    <h1>Mystery Word</h1>
+    {{#numGuesses}}
+    <h2>You have {{.}} guesses left</h2>
+    {{/numGuesses}}
+  </header>
+
+  <section>
+    <div class="wordArea">
+      <h2>{{wordDisplay}}</h2>
+    </div>
+
+    <div class="answers">
+      <form class="" action="" method="post">
+        <input type="text" name="letter" value="" />
+        <button type="submit" name="button">Make a Guess</button>
+      </form>
+    </div>
+
+    <div class="messages">
+      <h2>{{msge}}</h2>
+      <h2>{{tooMany}}</h2>
+      <h2>{{alreadyGuessed}}</h2>
+      <h4>Letters Guessed: {{#guessedLetters}}{{.}}{{/guessedLetters}}</h4>
+    </div>
+
+
+  </section>
+
+
+
+
+
+  </body>
+</html>
