@@ -46,21 +46,23 @@ routes.post('/', function(req, res) {
   }
   guessedLetters.push(letter);
 
-  //
-  // if (index > 0) {
-  //
-  // }
-let wordarray = word.split('');
-let wordDisplayArray = wordDisplay.split('');
 
-wordarray.forEach(function(value, i) {
-  if (value === letter){
-    wordDisplayArray[i] = value;
+  while (index > -1) {
+    wordDisplay = wordDisplay.substr(0, index) + letter + wordDisplay.substr(index + 1);
+    index = word.indexOf(letter, index + 1);
+    tooManyLetters = '';
   }
-});
-
-word = wordarray.join('');
-wordDisplay = wordDisplayArray.join(' ');
+// let wordarray = word.split('');
+// let wordDisplayArray = wordDisplay.split('');
+//
+// wordarray.forEach(function(value, i) {
+//   if (value === letter){
+//     wordDisplayArray[i] = value;
+//   }
+// });
+//
+// word = wordarray.join('');
+// wordDisplay = wordDisplayArray.join(' ');
 
   //if guess is too long, display error
   if (letter.length > 1) {
